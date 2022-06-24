@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "";
+}
+<link rel="stylesheet" href="~/assets/App.css" type="text/css" />
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<body>
+    <div class="sidenav">
+        <div class="login-main-text">
+            <h2>Job Seeker<br> Login Page</h2>
+            <p>Login or register from here to access.</p>
+        </div>
+    </div>
+    <div class="main">
+        <div class="col-md-6 col-sm-12">
+            <div class="login-form">
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <label>User Name</label>
+                        <input type="text" class="form-control" name="Username" id="Username" placeholder="Please Enter your Username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="Password" id="Password" placeholder="Please enter your Password">
+                    </div>
+                    <label>@ViewBag.Message</label><br/>
+                    <button type="submit" class="btn btn-black">Login</button><br /><br />
+                    <p>Don't have a Account ? please <a href="~/Account/Register">Register</a> first</p>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
