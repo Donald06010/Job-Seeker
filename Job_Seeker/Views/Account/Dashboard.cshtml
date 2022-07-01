@@ -35,7 +35,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="~/Account/Dashboard">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -43,20 +43,31 @@
             </a>
 
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            <hr class="sidebar-divider my-0" />
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="~/Account/Dashboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
-
-          
-
+            @if (Convert.ToBoolean(Session["IsSuperAdmin"]) != false)
+             {
+                <li class="nav-item active">
+                    <a class="nav-link" href="~/Account/Userlist">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+             }
             
-
+            <li class="nav-item active">
+                <a class="nav-link" href="~/Account/Jobs">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>@ViewBag.Message</span>
+                </a>
+            </li>
         </ul>
         <!-- End of Sidebar -->
         <!-- Content Wrapper -->
@@ -238,7 +249,7 @@
                             </div>
                         </li>
 
-                        <div class="topbar-divider d-none d-sm-block"></div>
+
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
@@ -251,17 +262,17 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                  aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="~/Account/EditProfile">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Edit Profile
+                                </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    Applied Jobs
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="~/Account/ForgotPassword">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
+                                    Change Password ?
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="~/Account/Logout" data-toggle="modal" data-target="#logoutModal">
@@ -279,183 +290,181 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
+                    <h1 class="h3 mb-0 text-gray-800">User Profile</h1>
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
-                        </a>
-                    </div>
-
-                    <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                Tasks
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                        <section style="background-color: #eee;">
+                            <div class="container py-5">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="card mb-4">
+                                            <div class="card-body text-center">
+                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                                                     class="rounded-circle img-fluid" style="width: 150px;">
+                                                <h5 class="my-3">@Session["Username"]</h5>
+                                                <p class="text-muted mb-1">Full Stack Developer</p>
+                                                <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
+                                                <div class="d-flex justify-content-center mb-2">
+                                                    <button type="button" class="btn btn-primary">Follow</button> &diams;
+                                                    <button type="button" class="btn btn-outline-primary ms-1">Message</button>
                                                 </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                             style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                             aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="card mb-4 mb-lg-0">
+                                            <div class="card-body p-0">
+                                                <ul class="list-group list-group-flush rounded-3">
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                                        <i class="fas fa-globe fa-lg text-warning"></i>
+                                                        <p class="mb-0">https://mdbootstrap.com</p>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                                        <i class="fab fa-github fa-lg" style="color: #333333;"></i>
+                                                        <p class="mb-0">mdbootstrap</p>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                                        <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
+                                                        <p class="mb-0">mdbootstrap</p>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                                        <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
+                                                        <p class="mb-0">mdbootstrap</p>
+                                                    </li>
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                                        <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                                                        <p class="mb-0">mdbootstrap</p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <div class="card mb-4">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">Full Name</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <p class="text-muted mb-0">@Session["Username"]</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">Email</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <p class="text-muted mb-0">@Session["Email"]</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">Phone</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <p class="text-muted mb-0">(097) 234-5678</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">Mobile</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <p class="text-muted mb-0">(098) 765-4321</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">Address</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="card mb-4 mb-md-0">
+                                                    <div class="card-body">
+                                                        <p class="mb-4">
+                                                            <span class="text-primary font-italic me-1">assigment</span> Project Status
+                                                        </p>
+                                                        <p class="mb-1" style="font-size: .77rem;">Web Design</p>
+                                                        <div class="progress rounded" style="height: 5px;">
+                                                            <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
+                                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
+                                                        <div class="progress rounded" style="height: 5px;">
+                                                            <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
+                                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
+                                                        <div class="progress rounded" style="height: 5px;">
+                                                            <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
+                                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
+                                                        <div class="progress rounded" style="height: 5px;">
+                                                            <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"
+                                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
+                                                        <div class="progress rounded mb-2" style="height: 5px;">
+                                                            <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"
+                                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                            <div class="col-md-6">
+                                                <div class="card mb-4 mb-md-0">
+                                                    <div class="card-body">
+                                                        <p class="mb-4">
+                                                            <span class="text-primary font-italic me-1">assigment</span> Project Status
+                                                        </p>
+                                                        <p class="mb-1" style="font-size: .77rem;">Web Design</p>
+                                                        <div class="progress rounded" style="height: 5px;">
+                                                            <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
+                                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <p class="mt-4 mb-1" style="font-size: .77rem;">Website Markup</p>
+                                                        <div class="progress rounded" style="height: 5px;">
+                                                            <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
+                                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <p class="mt-4 mb-1" style="font-size: .77rem;">One Page</p>
+                                                        <div class="progress rounded" style="height: 5px;">
+                                                            <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
+                                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <p class="mt-4 mb-1" style="font-size: .77rem;">Mobile Template</p>
+                                                        <div class="progress rounded" style="height: 5px;">
+                                                            <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"
+                                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <p class="mt-4 mb-1" style="font-size: .77rem;">Backend API</p>
+                                                        <div class="progress rounded mb-2" style="height: 5px;">
+                                                            <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"
+                                                                 aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </section>
                     </div>
-
-                    <!-- Content Row -->
-
-                    <div class="row">
-
-                        <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                             aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                             aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                   <!-- End of Content Wrapper -->
-
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- End of Content Wrapper -->
     <!-- End of Page Wrapper -->
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">

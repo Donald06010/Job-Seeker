@@ -38,8 +38,15 @@
                     <li><a class="nav-link scrollto" href="#services">Services</a></li>
                     <li><a class="nav-link scrollto" href="#team">Team</a></li>
                     <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-                    <li><a class="nav-link scrollto" href="~/Account/Login">Login</a></li>
-                    <li><a class="nav-link scrollto" href="~/Account/Register">Register</a></li>
+                    @if (Session["Username"] == null)
+                    {
+                        <li><a class="nav-link scrollto" href="~/Account/Login">Login</a></li>
+                        <li><a class="nav-link scrollto" href="~/Account/Register">Register</a></li>
+                    }
+                    else
+                    {
+                        <li><a class="nav-link scrollto" href="~/Account/Dashboard">@Session["Username"]</a></li>
+                    }
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->

@@ -4,13 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="JobSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="JobSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Login">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Userid" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="50" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -24,41 +23,41 @@
           <Property Name="Username" Type="nvarchar" MaxLength="50" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
           <Property Name="ConfirmPassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsSuperAdmin" Type="bit" />
+          <Property Name="ResetPasswordCode" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK_Login_Register">
+        <Association Name="FK_Login_Register1">
           <End Role="Register" Type="Self.Register" Multiplicity="1" />
-          <End Role="Login" Type="Self.Login" Multiplicity="*" />
+          <End Role="Login" Type="Self.Login" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Register">
               <PropertyRef Name="Userid" />
             </Principal>
             <Dependent Role="Login">
-              <PropertyRef Name="Userid" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="JobSystemModelStoreContainer">
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Register" EntityType="Self.Register" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Login_Register" Association="Self.FK_Login_Register">
+          <AssociationSet Name="FK_Login_Register1" Association="Self.FK_Login_Register1">
             <End Role="Register" EntitySet="Register" />
             <End Role="Login" EntitySet="Login" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="JobSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Login">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Userid" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Register" Relationship="Self.FK_Login_Register" FromRole="Login" ToRole="Register" />
+          <NavigationProperty Name="Register" Relationship="Self.FK_Login_Register1" FromRole="Login" ToRole="Register" />
         </EntityType>
         <EntityType Name="Register">
           <Key>
@@ -70,24 +69,26 @@
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ConfirmPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Logins" Relationship="Self.FK_Login_Register" FromRole="Register" ToRole="Login" />
+          <Property Name="IsSuperAdmin" Type="Boolean" />
+          <NavigationProperty Name="Login" Relationship="Self.FK_Login_Register1" FromRole="Register" ToRole="Login" />
+          <Property Name="ResetPasswordCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <Association Name="FK_Login_Register">
+        <Association Name="FK_Login_Register1">
           <End Role="Register" Type="Self.Register" Multiplicity="1" />
-          <End Role="Login" Type="Self.Login" Multiplicity="*" />
+          <End Role="Login" Type="Self.Login" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Register">
               <PropertyRef Name="Userid" />
             </Principal>
             <Dependent Role="Login">
-              <PropertyRef Name="Userid" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="JobSystemEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Logins" EntityType="Self.Login" />
           <EntitySet Name="Registers" EntityType="Self.Register" />
-          <AssociationSet Name="FK_Login_Register" Association="Self.FK_Login_Register">
+          <AssociationSet Name="FK_Login_Register1" Association="Self.FK_Login_Register1">
             <End Role="Register" EntitySet="Registers" />
             <End Role="Login" EntitySet="Logins" />
           </AssociationSet>
@@ -101,8 +102,7 @@
           <EntitySetMapping Name="Logins">
             <EntityTypeMapping TypeName="JobSystemModel.Login">
               <MappingFragment StoreEntitySet="Login">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Userid" ColumnName="Userid" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
               </MappingFragment>
@@ -111,12 +111,14 @@
           <EntitySetMapping Name="Registers">
             <EntityTypeMapping TypeName="JobSystemModel.Register">
               <MappingFragment StoreEntitySet="Register">
+                <ScalarProperty Name="ResetPasswordCode" ColumnName="ResetPasswordCode" />
                 <ScalarProperty Name="Userid" ColumnName="Userid" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="ConfirmPassword" ColumnName="ConfirmPassword" />
+                <ScalarProperty Name="IsSuperAdmin" ColumnName="IsSuperAdmin" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

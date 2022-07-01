@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6f634f40c94e44519c775af0d9dc2b39" Name="Diagram1">
-        <EntityTypeShape EntityType="JobSystemModel.Login" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="JobSystemModel.Register" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="JobSystemModel.FK_Login_Register" ManuallyRouted="false" />
+      <Diagram DiagramId="bf9d1a1773b849e58cb0c1d8f769806a" Name="Diagram1">
+        <EntityTypeShape EntityType="JobSystemModel.Login" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="JobSystemModel.Register" Width="1.75" PointX="0.75" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="JobSystemModel.FK_Login_Register1" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

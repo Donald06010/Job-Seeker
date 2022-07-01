@@ -14,20 +14,15 @@ namespace Job_Seeker.DAL
     
     public partial class Register
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Register()
-        {
-            this.Logins = new HashSet<Login>();
-        }
-    
         public int Userid { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
+        public Nullable<bool> IsSuperAdmin { get; set; }
+        public string ResetPasswordCode { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Login> Logins { get; set; }
+        public virtual Login Login { get; set; }
     }
 }
